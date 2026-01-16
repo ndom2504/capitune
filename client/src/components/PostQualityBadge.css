@@ -1,0 +1,41 @@
+.post-quality-badge {
+  display: inline-flex;
+  margin-bottom: var(--space-sm);
+}
+
+.quality-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--color-sand);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.quality-icon {
+  flex-shrink: 0;
+  transition: var(--transition-fast);
+}
+
+.quality-label {
+  color: var(--color-text-secondary);
+}
+
+.quality-score {
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+@media (max-width: 768px) {
+  .quality-content {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+  }
+
+  .quality-icon {
+    width: 14px;
+    height: 14px;
+  }
+}

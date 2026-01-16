@@ -1,0 +1,90 @@
+Capitune – Vue d’ensemble (rôles + fonctionnalités globales + Android natif Inside)
+
+Rôles (acteurs)
+- Utilisateur authentifié (membre) : crée/consulte des posts, messages, événements, communautés, marketplace, monétisation, notifications.
+- Créateur/Entreprise (profil avancé) : publie des offres (opportunités), campagnes, gère des contrats/monétisation.
+- Administrateur (interne) : modère contenus, gère utilisateurs/opportunités (non détaillé ici mais via routes back-office potentielles).
+
+Domaines fonctionnels clés (backend Express/Mongo existant)
+- Auth & Profil : /api/auth/login|register|google|microsoft ; profils utilisateur (User, avatars, bio, followers/following, badges).
+- Feed/Posts : /api/posts ; création/consultation, likes/commentaires (selon modèle), algorithme feedAlgorithm.js.
+- Notifications : /api/notifications ; notificationHelper.js, badgeHelper.js ; intégration client via polling/badges.
+- Inside (messagerie directe) : conversations, messages, demandes de contact (ContactRequest), notifications d’acceptation ; endpoints /api/inside/**.
+- Contacts : /api/contacts ; demandes, acceptation/refus.
+- Communities : /api/communities et CommunityPosts.
+- Events : /api/events (création, inscription, listing).
+- Marketplace / Opportunités : /api/marketplace, /api/opportunities, /api/monetization ; contrats/monétisation (Contract, MonetizationProfile).
+- Analytics : /api/analytics ; collecte/affichage métriques (selon implémentation).
+- Creator/Microsoft/Firebase : intégrations externes (graph, firebase) pour auth/graph data.
+
+Fonctionnalités principales côté client (web/mobile)
+- Auth JWT (email+password, Google/Microsoft) ; stockage token ; redirection login si 401.
+- Profil & avatar : affichage, resolveUrl pour images (relatives -> API_BASE_URL).
+- Feed : listing posts, interactions (selon implémentation front web) ; algorithme côté serveur.
+- Messagerie Inside : conversations, messages, intents audio/vidéo, placeholder fichier, demandes de contact, notifications.
+- Notifications : badge/navigation ; création via notificationHelper côté serveur.
+- Communities/Events/Marketplace : listes, détails, actions CRUD selon rôle.
+
+API clés à connaître (non exhaustif)
+- Auth : POST /api/auth/login, /register, /google, /microsoft.
+- Inside : GET /api/inside/conversations, GET/POST /api/inside/conversations/:id/messages, GET /api/inside/requests.
+- Contacts : POST/GET /api/contacts (demandes/accept/refuse selon routes définies).
+- Posts/Feed : /api/posts (CRUD), /api/notifications (polling), /api/analytics.
+- Marketplace/Opportunités : /api/marketplace, /api/opportunities, /api/monetization, /api/contracts.
+- Communities/Events : /api/communities, /api/communityPosts, /api/events.
+
+Android natif – périmètre immédiat (Inside) et extensibilité
+- Périmètre prioritaire implémenté (aligné Expo) : auth JWT, Inside (conversations/messages), intents audio/vidéo, placeholder fichier, avatars, bannière erreur, layout mobile-first.
+- Extensibilité :
+  * Notifications : WorkManager + polling /requests ou /notifications, push FCM ultérieurement.
+  * Marketplace/Opportunités : écrans liste/détail, actions candidater/poster selon rôle.
+  * Communities/Events : listing, détail, join/leave, poster dans une communauté.
+  * Feed/Posts : liste, création, interactions ; réutiliser resolveUrl pour médias.
+
+Squelette Android (Compose + Retrofit, en pseudo-structure)
+
+project-root/
+  app/
+    build.gradle.kts
+    src/main/java/.../capitune/android/
+      App.kt (Hilt optional)
+      Navigation.kt (graph : Login -> Inside ; extensible vers Feed, Communities, Marketplace, Events)
+      data/api/AuthApi.kt, InsideApi.kt (+ autres Api : PostsApi, CommunitiesApi, EventsApi, MarketplaceApi quand nécessaires)
+      data/api/NetworkModule.kt (OkHttp, interceptors, Retrofit)
+      data/model/dto/*.kt (ConversationDto, MessageDto, RequestDto, LoginResponse, PostDto, EventDto, CommunityDto, OpportunityDto)
+      data/model/ui/*.kt (ConversationUi, MessageUi, PostUi, EventUi, CommunityUi)
+      data/repo/AuthRepository.kt, InsideRepository.kt, PostsRepository.kt, CommunitiesRepository.kt, EventsRepository.kt (progressivement)
+      ui/login/LoginViewModel.kt, LoginScreen.kt
+      ui/inside/InsideViewModel.kt, InsideScreen.kt (list + messages + input + icons)
+      ui/feed/FeedViewModel.kt, FeedScreen.kt (plus tard)
+      ui/communities/..., ui/events/..., ui/marketplace/... (plus tard)
+      ui/components/BannerError.kt, MessageBubble.kt, ConversationItem.kt, AvatarImage.kt, PostCard.kt (réutilisables)
+      util/ResolveUrl.kt
+    src/main/res/xml/network_security_config.xml (cleartext if HTTP)
+    src/main/AndroidManifest.xml (usesCleartextTraffic=true if HTTP)
+  gradle/libs.versions.toml (versions Kotlin/Compose/Retrofit/OkHttp/Coil)
+
+Dépendances clés
+- Retrofit + OkHttp logging
+- Kotlinx-serialization ou Moshi
+- DataStore Preferences ou EncryptedSharedPreferences (JWT)
+- Jetpack Compose BOM, Coil (avatars/images)
+- Coroutine/Flow + ViewModel
+
+Logique réseau (rappel)
+- Interceptor Authorization si token ; log debug.
+- baseUrl = BuildConfig.API_BASE_URL ; errors -> bannière ; 401 -> clear token + nav login.
+
+Flows d’écran (priorité Inside)
+- Login : email/password -> save token -> nav Inside.
+- Inside : liste conversations, messages, send texte, quick audio/vidéo, placeholder fichier, bannière erreur.
+- Extensible : Feed, Communities, Events, Marketplace reprennent la même couche réseau/erreur.
+
+Tests rapides
+- Unit mapping DTO -> UI, repos simulés.
+- UI Compose : login, inside (affichage liste, bannière erreur).
+- Manual : vérifier GET/POST sur device réel avec API_BASE_URL accessible.
+
+Prochaines étapes possibles
+- Upload multipart réel ; VoIP/RTC ; push/badges ; flavors dev/prod ; modules supplémentaires (feed, communities, events, marketplace) branchés sur les routes serveur existantes.
+

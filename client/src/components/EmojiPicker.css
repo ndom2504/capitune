@@ -1,0 +1,10 @@
+.emoji-picker{position:absolute;right:0;top:100%;margin-top:8px;background:#fff;border:1px solid #e6e6e6;border-radius:12px;box-shadow:0 12px 26px rgba(0,0,0,.12);padding:.6rem;width:360px;font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",system-ui,sans-serif;z-index:1000}
+.emoji-picker.compact{width:320px}
+.emoji-toolbar{display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem}
+.emoji-search{flex:1;min-width:140px;border:1px solid #ddd;border-radius:8px;padding:.4rem .6rem;font-size:.85rem}
+.emoji-tabs{display:flex;gap:.25rem;overflow-x:auto}
+.emoji-tab{border:1px solid #e9ecf3;background:#f6f7fb;color:#333;padding:.35rem .6rem;border-radius:20px;font-size:.72rem;cursor:pointer}
+.emoji-tab.active{background:var(--color-primary);color:#fff;border-color:transparent}
+.emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:.3rem;max-height:230px;overflow:auto;padding:.25rem}
+.emoji-btn{border:none;background:#fff;border-radius:10px;line-height:2.2rem;height:2.2rem;font-size:1.35rem;cursor:pointer}
+.emoji-btn:hover{background:#f1f4fa}
