@@ -56,11 +56,17 @@ router.post('/', authenticate, (req, res) => {
 // Like a post
 router.post('/:id/like', authenticate, (req, res) => {
   try {
-    const post = Post.addLike(req.params.id, req.user.id);
+    const post = Post.findById(req.params.id);
     if (!post) {
-      return res.status(404).json({ error: 'Post not found or already liked' });
+      return res.status(404).json({ error: 'Post not found' });
     }
-    res.json(post);
+
+    if (post.likes.includes(req.user.id)) {
+      return res.status(400).json({ error: 'Post already liked' });
+    }
+
+    const updatedPost = Post.addLike(req.params.id, req.user.id);
+    res.json(updatedPost);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error' });

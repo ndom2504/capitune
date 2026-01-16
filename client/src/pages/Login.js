@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Auth.css';
 
 const Login = () => {
@@ -52,7 +52,7 @@ const Login = () => {
           <button type="submit" className="btn-primary">Login</button>
         </form>
         <p className="auth-link">
-          Don't have an account? <a href="/register">Sign up here</a>
+          Don't have an account? <Link to="/register">Sign up here</Link>
         </p>
       </div>
     </div>

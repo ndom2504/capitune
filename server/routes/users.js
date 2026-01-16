@@ -71,6 +71,10 @@ router.post('/:id/follow', authenticate, (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
+    if (!currentUser) {
+      return res.status(404).json({ error: 'Current user not found' });
+    }
+
     if (req.params.id === req.user.id) {
       return res.status(400).json({ error: 'Cannot follow yourself' });
     }
@@ -100,6 +104,10 @@ router.delete('/:id/follow', authenticate, (req, res) => {
 
     if (!targetUser) {
       return res.status(404).json({ error: 'User not found' });
+    }
+
+    if (!currentUser) {
+      return res.status(404).json({ error: 'Current user not found' });
     }
 
     // Remove from following list
