@@ -10,13 +10,14 @@ const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) {
   console.error('FATAL ERROR: JWT_SECRET is not defined.');
   if (process.env.NODE_ENV === 'production') {
+    console.error('Application cannot start in production without JWT_SECRET.');
     process.exit(1);
   } else {
-    console.warn('WARNING: Using default JWT_SECRET for development. DO NOT use in production.');
+    console.warn('WARNING: JWT_SECRET not set. Using insecure default for development ONLY.');
   }
 }
 
-const ACTUAL_JWT_SECRET = JWT_SECRET || 'dev-secret-key-change-in-production';
+const ACTUAL_JWT_SECRET = JWT_SECRET || 'dev-secret-DO-NOT-USE-IN-PRODUCTION';
 
 // Register
 router.post('/register', async (req, res) => {
