@@ -4,7 +4,19 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET;
+
+// Validate JWT_SECRET is set
+if (!JWT_SECRET) {
+  console.error('FATAL ERROR: JWT_SECRET is not defined.');
+  if (process.env.NODE_ENV === 'production') {
+    process.exit(1);
+  } else {
+    console.warn('WARNING: Using default JWT_SECRET for development. DO NOT use in production.');
+  }
+}
+
+const ACTUAL_JWT_SECRET = JWT_SECRET || 'dev-secret-key-change-in-production';
 
 // Register
 router.post('/register', async (req, res) => {
@@ -38,7 +50,7 @@ router.post('/register', async (req, res) => {
     });
 
     // Create token
-    const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ userId: user.id }, ACTUAL_JWT_SECRET, { expiresIn: '7d' });
 
     res.status(201).json({
       message: 'User created successfully',
@@ -74,7 +86,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Create token
-    const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ userId: user.id }, ACTUAL_JWT_SECRET, { expiresIn: '7d' });
 
     res.json({
       message: 'Login successful',

@@ -8,7 +8,7 @@ class User {
     this.id = uuidv4();
     this.username = username;
     this.email = email;
-    this.password = password; // In production, this should be hashed
+    this.password = password; // Expected to be hashed
     this.bio = bio;
     this.level = level; // beginner, intermediate, advanced
     this.createdAt = new Date();

@@ -1,7 +1,19 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET;
+
+// Validate JWT_SECRET is set
+if (!JWT_SECRET) {
+  console.error('FATAL ERROR: JWT_SECRET is not defined.');
+  if (process.env.NODE_ENV === 'production') {
+    process.exit(1);
+  } else {
+    console.warn('WARNING: Using default JWT_SECRET for development. DO NOT use in production.');
+  }
+}
+
+const ACTUAL_JWT_SECRET = JWT_SECRET || 'dev-secret-key-change-in-production';
 
 const authenticate = (req, res, next) => {
   try {
@@ -14,7 +26,7 @@ const authenticate = (req, res, next) => {
     const token = authHeader.substring(7); // Remove 'Bearer ' prefix
 
     // Verify token
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, ACTUAL_JWT_SECRET);
 
     // Get user
     const user = User.findById(decoded.userId);
