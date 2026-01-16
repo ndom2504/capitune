@@ -1,0 +1,88 @@
+.navbar {
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navbar-logo:hover {
+  color: #2980b9;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-link {
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar-link:hover {
+  color: #3498db;
+}
+
+.navbar-register {
+  background: #3498db;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+.navbar-register:hover {
+  background: #2980b9;
+  color: white;
+}
+
+.navbar-user {
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.navbar-logout {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.navbar-logout:hover {
+  background: #c0392b;
+}
+
+@media (max-width: 768px) {
+  .navbar-menu {
+    gap: 10px;
+    font-size: 14px;
+  }
+  
+  .navbar-logo {
+    font-size: 20px;
+  }
+}
