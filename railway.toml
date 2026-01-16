@@ -10,12 +10,9 @@ dockerfilePath = "Dockerfile"
 [deploy]
 numReplicas = 1
 restartPolicyMaxRetries = 2
-healthcheck {
-  path = "/health"
-  interval = 30
-  timeout = 10
-  startPeriod = 5
-}
+healthcheckPath = "/health"
+healthcheckTimeout = 10
+restartPolicyType = "ON_FAILURE"
 
 # Variables d'environnement requises (à configurer dans l'interface Railway):
 # - NODE_ENV=production
