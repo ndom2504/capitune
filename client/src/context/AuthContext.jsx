@@ -143,36 +143,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const loginWithGoogle = async () => {
-    try {
-      console.log('🔵 Attempting Google popup...');
-      const result = await signInWithPopup(auth, googleProvider);
-      console.log('✅ Google popup success:', result.user.email);
-      const firebaseUser = result.user;
-
-      const idToken = await firebaseUser.getIdToken();
-      console.log('📤 Posting idToken to /auth/google...');
-      const response = await api.post('/auth/google', { idToken });
-      console.log('✅ Auth response:', response.data);
-
-      localStorage.setItem('token', response.data.token);
-      setToken(response.data.token);
-      setUser(response.data.user);
-      try { window.location.assign('/feed'); } catch (_) {}
-      return response.data;
-    } catch (error) {
-      console.error('❌ Erreur connexion Google:', error);
-      console.error('Error code:', error?.code);
-      console.error('Error message:', error?.message);
-
-      // Fallback redirect si le popup est fermé/bloqué (cas fréquent sur mobile ou bloqueur de popups)
-      if (error?.code === 'auth/popup-closed-by-user' || error?.code === 'auth/popup-blocked') {
-        console.log('↩️ Popup fermé/bloqué, bascule en redirect...');
-        await signInWithRedirect(auth, googleProvider);
-        return; // La suite sera gérée dans handleGoogleRedirect()
-      }
-
-      throw error;
-    }
+    // Utilise directement le mode redirect pour éviter les bloqueurs / fermetures de popups
+    console.log('🔵 Google auth via redirect...');
+    await signInWithRedirect(auth, googleProvider);
+    // Le résultat sera traité dans handleGoogleRedirect()
   };
 
   const loginWithMicrosoft = async () => {
