@@ -41,11 +41,9 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
   .concat(defaultAllowed);
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    // Temporaire: autoriser toutes origines pour lever le blocage CORS Google
-    callback(null, true);
-  },
-  credentials: true,
+  // Autoriser toutes les origines (pas de cookies côté client)
+  origin: '*',
+  credentials: false,
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 204
