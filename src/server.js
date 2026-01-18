@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import fs from 'fs';
 import { connectDB } from './config/database.js';
 
 // Import routes  
@@ -23,6 +24,12 @@ dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const uploadsDir = join(__dirname, '../uploads');
+
+// Ensure uploads directory exists (for image/video uploads)
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -70,7 +77,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Servir les fichiers statiques (uploads)
-app.use('/uploads', express.static(join(__dirname, '../uploads')));
+app.use('/uploads', express.static(uploadsDir));
 
 // Routes
 app.use('/api/auth', authRoutes);
