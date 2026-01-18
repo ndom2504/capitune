@@ -49,8 +49,19 @@ const corsOptions = {
   optionsSuccessStatus: 204
 };
 
+// CORS: allow all origins (no credentials)
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
+// Force CORS headers for any path, including preflight
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
 app.use((req, res, next) => {
   res.set('X-Content-Type-Options', 'nosniff');
   next();
