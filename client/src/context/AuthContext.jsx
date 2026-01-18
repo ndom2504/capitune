@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { signInWithPopup, signInWithRedirect, getRedirectResult, signOut as firebaseSignOut } from 'firebase/auth';
+import { signInWithPopup, signInWithRedirect, getRedirectResult, signOut as firebaseSignOut, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { auth, googleProvider } from '../config/firebase';
 import { msalInstance, loginRequest } from '../config/microsoft';
 import api from '../utils/api';
@@ -22,6 +22,11 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const init = async () => {
       setLoading(true);
+      try {
+        await setPersistence(auth, browserLocalPersistence);
+      } catch (err) {
+        console.warn('⚠️ Cannot set persistence, continue anyway:', err?.message);
+      }
       await handleMicrosoftRedirect();
       const handledGoogle = await handleGoogleRedirect();
       if (!handledGoogle) {
@@ -158,14 +163,14 @@ export const AuthProvider = ({ children }) => {
       console.error('❌ Erreur connexion Google:', error);
       console.error('Error code:', error?.code);
       console.error('Error message:', error?.message);
-      // Force redirect pour tous les cas
-      try {
-        console.log('🔄 Falling back to redirect...');
+
+      // Fallback redirect si le popup est fermé/bloqué (cas fréquent sur mobile ou bloqueur de popups)
+      if (error?.code === 'auth/popup-closed-by-user' || error?.code === 'auth/popup-blocked') {
+        console.log('↩️ Popup fermé/bloqué, bascule en redirect...');
         await signInWithRedirect(auth, googleProvider);
-        return;
-      } catch (redirectError) {
-        console.error('❌ Erreur redirect Google:', redirectError);
+        return; // La suite sera gérée dans handleGoogleRedirect()
       }
+
       throw error;
     }
   };
