@@ -42,11 +42,8 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Autoriser requêtes sans origin (ex: outils CLI) et les origines whitelistees
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    return callback(null, false);
+    // Temporaire: autoriser toutes origines pour lever le blocage CORS Google
+    callback(null, true);
   },
   credentials: true,
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
