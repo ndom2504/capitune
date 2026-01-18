@@ -1,5 +1,6 @@
 // Utilitaire pour générer les URLs de médias
-let API_BASE_URL = process.env.API_BASE_URL || `http://localhost:${process.env.PORT || 3000}`;
+// Par défaut, pointer vers le domaine Railway si aucune variable n'est fournie
+let API_BASE_URL = process.env.API_BASE_URL || 'https://capitune-production.up.railway.app';
 
 export function setApiBaseUrl(url) {
   API_BASE_URL = url;
