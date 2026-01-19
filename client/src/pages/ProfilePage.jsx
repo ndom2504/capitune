@@ -8,7 +8,7 @@ import PostCard from '../components/PostCard';
 import CognitiveIndicators from '../components/CognitiveIndicators';
 import ThemeExplorer from '../components/ThemeExplorer';
 import './ProfilePage.css';
-const API_HOST = import.meta.env.VITE_API_HOST || 'http://localhost:3000';
+const API_HOST = import.meta.env.VITE_API_HOST || 'https://capitune-production.up.railway.app';
 const resolveUrl = (url) => (url?.startsWith('/uploads') ? `${API_HOST}${url}` : url);
 
 function ProfilePage() {
@@ -158,7 +158,14 @@ function ProfilePage() {
     const file = e.target.files?.[0];
     if (!file) return;
     setAvatarFile(file);
-    setAvatarPreview(URL.createObjectURL(file));
+
+    // Use FileReader so preview works even if blob URLs are blocked
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setAvatarPreview(reader.result || '');
+    };
+    reader.onerror = () => setAvatarPreview('');
+    reader.readAsDataURL(file);
   };
 
   const handleAvatarUpload = async () => {
@@ -171,6 +178,7 @@ function ProfilePage() {
       });
       setProfile(response.data.user);
       updateUser(response.data.user);
+      setAvatarPreview(response.data.user.avatar ? resolveUrl(response.data.user.avatar) : '');
       setAvatarFile(null);
     } catch (error) {
       console.error('Erreur upload avatar:', error);
