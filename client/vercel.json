@@ -1,0 +1,48 @@
+# Fichier de configuration Vercel pour le frontend
+
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "installCommand": "npm install",
+  "env": [
+    {
+      "key": "VITE_API_HOST",
+      "value": "@VITE_API_HOST"
+    },
+    {
+      "key": "VITE_FIREBASE_API_KEY",
+      "value": "@VITE_FIREBASE_API_KEY"
+    },
+    {
+      "key": "VITE_FIREBASE_AUTH_DOMAIN",
+      "value": "@VITE_FIREBASE_AUTH_DOMAIN"
+    },
+    {
+      "key": "VITE_FIREBASE_PROJECT_ID",
+      "value": "@VITE_FIREBASE_PROJECT_ID"
+    },
+    {
+      "key": "VITE_FIREBASE_STORAGE_BUCKET",
+      "value": "@VITE_FIREBASE_STORAGE_BUCKET"
+    },
+    {
+      "key": "VITE_FIREBASE_MESSAGING_SENDER_ID",
+      "value": "@VITE_FIREBASE_MESSAGING_SENDER_ID"
+    },
+    {
+      "key": "VITE_FIREBASE_APP_ID",
+      "value": "@VITE_FIREBASE_APP_ID"
+    },
+    {
+      "key": "VITE_FIREBASE_MEASUREMENT_ID",
+      "value": "@VITE_FIREBASE_MEASUREMENT_ID"
+    }
+  ],
+  "regions": ["iad1"],
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}

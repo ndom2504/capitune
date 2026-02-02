@@ -1,0 +1,54 @@
+.advertiser-dashboard{padding:24px}
+.ad-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:16px}
+.ad-period{display:flex;gap:8px}
+.ad-period button{padding:6px 10px;border:1px solid #e5e7eb;background:#f9fafb;border-radius:8px;cursor:pointer}
+.ad-period .active{background:#2956a3;color:#fff;border-color:#2956a3}
+.ad-budget{display:flex;gap:24px}
+.ad-budget-item{display:flex;flex-direction:column;align-items:flex-end}
+.ad-budget-label{color:#6b7280;font-size:12px}
+.ad-budget-value{font-weight:700;color:#111827}
+
+.ad-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:12px 0 24px}
+.ad-kpi-card{display:flex;gap:12px;align-items:center;border:1px solid #e5e7eb;border-radius:12px;padding:12px;background:#fff}
+.ad-kpi-value{font-weight:700}
+.ad-kpi-label{color:#6b7280;font-size:12px}
+.ad-kpi-meta{color:#9ca3af;font-size:12px}
+
+.ad-section{margin-top:24px}
+.ad-section-title{font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+
+.ad-campaign-list{display:flex;flex-direction:column;gap:12px}
+.ad-campaign-card{border:1px solid #e5e7eb;border-radius:12px;padding:12px;background:#fff;display:flex;justify-content:space-between;align-items:center}
+.ad-campaign-title{font-weight:600}
+.ad-campaign-meta{color:#6b7280;font-size:12px}
+.ad-campaign-actions{display:flex;gap:8px}
+.ad-campaign-actions button{padding:8px 12px;border:1px solid #e5e7eb;background:#f9fafb;border-radius:8px;cursor:pointer}
+
+.ad-creator-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ad-creator-card{border:1px solid #e5e7eb;border-radius:12px;padding:12px;background:#fff}
+.creator-name{font-weight:600}
+.creator-bio{color:#6b7280;font-size:12px;margin:4px 0}
+.creator-followers{color:#374151;font-size:12px}
+.creator-actions{display:flex;gap:8px;margin-top:8px}
+.creator-actions button{padding:8px 12px;border:1px solid #e5e7eb;background:#f9fafb;border-radius:8px;cursor:pointer}
+
+.ad-performance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ad-chart-card{border:1px solid #e5e7eb;border-radius:12px;padding:12px;background:#fff}
+.chart-title{font-weight:600}
+.chart-placeholder{color:#6b7280;font-size:12px;margin-top:4px}
+
+.ad-recos{display:grid;gap:8px;margin:0;padding-left:16px}
+.ad-payments{display:grid;gap:8px}
+.ad-payment-item{display:flex;gap:8px;align-items:center;color:#374151}
+.ad-notifs{display:grid;gap:8px;margin:0;padding-left:16px}
+
+@media (max-width:900px){
+  .ad-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ad-creator-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ad-performance-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .ad-kpis{grid-template-columns:1fr}
+  .ad-creator-grid{grid-template-columns:1fr}
+  .ad-performance-grid{grid-template-columns:1fr}
+}

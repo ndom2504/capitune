@@ -1,0 +1,25 @@
+.onboard{max-width:900px;margin:24px auto;padding:0 16px;display:flex;flex-direction:column;gap:16px}
+.onboard-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.eyebrow{color:#6b7280;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;margin:0}
+.lede{color:#4b5563;margin:4px 0 0}
+.step{background:#f3f4f6;padding:8px 12px;border-radius:12px;font-weight:600;color:#111827}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field input,.field textarea,.field select{border:1px solid #e5e7eb;border-radius:10px;padding:10px;font-size:14px}
+.field textarea{min-height:90px;resize:vertical}
+.hint{color:#6b7280;font-size:13px}
+.options{display:grid;gap:8px}
+.option{border:1px solid #e5e7eb;border-radius:10px;padding:10px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.option.active{border-color:#2956a3;background:#f0f4ff}
+.actions{display:flex;gap:8px;justify-content:flex-end}
+.actions button{padding:10px 14px;border:none;border-radius:10px;background:#2956a3;color:#fff;cursor:pointer}
+.actions .ghost{background:#f3f4f6;color:#111827;border:1px solid #e5e7eb}
+.error-banner{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;padding:10px;border-radius:10px}
+.bullets{padding-left:20px;display:grid;gap:6px;margin:0}
+.checkbox{display:flex;align-items:center;gap:8px}
+.checkbox input{width:16px;height:16px}
+
+@media(max-width:640px){
+  .onboard-header{flex-direction:column;align-items:flex-start}
+  .actions{flex-wrap:wrap}
+}

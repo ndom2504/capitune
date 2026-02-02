@@ -1,0 +1,68 @@
+.ethical-feed-note {
+  background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-beige) 100%);
+  border: 1px solid var(--color-accent);
+  border-radius: 12px;
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  color: var(--color-text-primary);
+}
+
+.note-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  color: var(--color-accent);
+}
+
+.note-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.note-content p {
+  margin: 0 0 var(--space-md) 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+}
+
+.note-content p em {
+  color: var(--color-accent);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.note-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-sm);
+}
+
+.note-content li {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  padding-left: 12px;
+}
+
+@media (max-width: 768px) {
+  .ethical-feed-note {
+    padding: var(--space-md);
+  }
+
+  .note-content ul {
+    grid-template-columns: 1fr;
+  }
+
+  .note-content p {
+    font-size: 0.9rem;
+  }
+
+  .note-content li {
+    font-size: 0.85rem;
+  }
+}
