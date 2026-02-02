@@ -1,0 +1,12 @@
+# Railway Configuration
+# This file is automatically detected by Railway
+
+[build]
+builder = "nixpacks"
+
+[env]
+NODE_ENV = "production"
+PORT = "3000"
+
+[deploy]
+startCommand = "npm start"
